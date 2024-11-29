@@ -42,7 +42,8 @@ This web application allows users to convert their local currency to Bitcoin (BT
 2. **Select Currency**: Choose your local currency from the dropdown menu.
 3. **Click "Convert"**: The app will display the equivalent Bitcoin (BTC) and Satoshis (sats), along with the transaction fee.
 4. **See Results**: The converted values will be shown in the output section.
-
+ 
+Video Link to how it works:https://youtu.be/iBY68wRqnts
 ## Contributing
 
 If you want to contribute to this project, follow these steps:
