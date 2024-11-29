@@ -1,7 +1,3 @@
-Here’s a well-written `README.md` file for your app:
-
----
-
 # Currency to Bitcoin Converter App
 
 This web application allows users to convert their local currency to Bitcoin (BTC), displaying the conversion price in both Bitcoin and Satoshis (sats). It also includes the ability to calculate transaction fees, making it a useful tool for those looking to track and convert cryptocurrency with real-time data.
