@@ -1,52 +1,51 @@
+const currencyList = [
+    { code: 'KES', name: 'Kenyan Shilling' },
+    { code: 'NGN', name: 'Nigerian Naira' },
+    { code: 'ZAR', name: 'South African Rand' },
+    { code: 'GHS', name: 'Ghanaian Cedi' },
+    { code: 'UGX', name: 'Ugandan Shilling' },
+    { code: 'TZS', name: 'Tanzanian Shilling' },
+    { code: 'ETB', name: 'Ethiopian Birr' },
+    { code: 'RWF', name: 'Rwandan Franc' },
+    { code: 'MWK', name: 'Malawian Kwacha' },
+    { code: 'CDF', name: 'Congolese Franc' },
+    // Add any other African currencies as needed
+];
+
+const exchangeRateUrl = 'https://api.exchangerate-api.com/v4/latest/USD'; // Example API for exchange rates
+const bitcoinApiUrl = 'https://api.coindesk.com/v1/bpi/currentprice/BTC.json'; // Example API for Bitcoin price
+
 document.getElementById('convert-btn').addEventListener('click', async () => {
+    const currencyCode = document.getElementById('currency').value;
     const amount = parseFloat(document.getElementById('amount').value);
-    const currency = document.getElementById('currency').value;
-    const feePercentage = parseFloat(document.getElementById('fee').value);
 
-    // Validate inputs
     if (isNaN(amount) || amount <= 0) {
-        alert('Please enter a valid amount greater than zero.');
+        alert('Please enter a valid amount.');
         return;
     }
 
-    if (isNaN(feePercentage) || feePercentage < 0) {
-        alert('Please enter a valid fee percentage.');
-        return;
-    }
-
-    // Fetch Bitcoin price from API
-    const apiUrl = `https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=${currency.toLowerCase()}`;
     try {
-        const response = await fetch(apiUrl);
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
+        const exchangeResponse = await fetch(exchangeRateUrl);
+        const exchangeData = await exchangeResponse.json();
+        const bitcoinResponse = await fetch(bitcoinApiUrl);
+        const bitcoinData = await bitcoinResponse.json();
 
-        const data = await response.json();
-        const exchangeRate = data?.bitcoin?.[currency.toLowerCase()];
+        const exchangeRate = exchangeData.rates[currencyCode];
+        const bitcoinPrice = bitcoinData.bpi.USD.rate_float;
 
         if (!exchangeRate) {
-            alert('Error fetching Bitcoin price. Please try again.');
+            alert('Currency not found.');
             return;
         }
 
-        // Perform calculations
-        const transactionFee = (amount * feePercentage) / 100;
-        const amountAfterFee = amount - transactionFee;
-        const btcAmount = amountAfterFee / exchangeRate;
-        const satsAmount = btcAmount * 1e8;
+        const currencyInBitcoin = (amount / exchangeRate) / bitcoinPrice;
+        const transactionFee = currencyInBitcoin * 0.01; // Example 1% fee
+        const finalAmountInBitcoin = currencyInBitcoin - transactionFee;
 
-        // Display results
-        document.getElementById('result').innerHTML = `
-            <p><strong>Converted BTC:</strong> ${btcAmount.toFixed(8)} BTC</p>
-            <p><strong>Converted Sats:</strong> ${Math.floor(satsAmount)} sats</p>
-        `;
-        document.getElementById('fee-info').innerHTML = `
-            <p><strong>Transaction Fee:</strong> ${transactionFee.toFixed(2)} ${currency} (${feePercentage}%)</p>
-        `;
+        document.getElementById('result').textContent = `Amount in Bitcoin (after fee): ${finalAmountInBitcoin.toFixed(8)} BTC`;
     } catch (error) {
         console.error('Error fetching data:', error);
-        alert('An error occurred while fetching data. Please try again later.');
+        alert('An error occurred while fetching data.');
     }
 });
 
