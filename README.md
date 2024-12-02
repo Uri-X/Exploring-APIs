@@ -1,59 +1,82 @@
-# Currency to Bitcoin Converter App
+Here’s your updated README file with your GitHub username:
 
-This web application allows users to convert their local currency to Bitcoin (BTC), displaying the conversion price in both Bitcoin and Satoshis (sats). It also includes the ability to calculate transaction fees, making it a useful tool for those looking to track and convert cryptocurrency with real-time data.
+---
+
+# Currency-to-Bitcoin Conversion Application
+
+## Description
+
+This application allows users to convert their local currency to Bitcoin (BTC) and display the result in both BTC and sats. It uses the CoinGecko API to fetch live cryptocurrency prices and supports multiple currencies. The app provides a useful tool for people looking to track or manage their cryptocurrency holdings in real-time.
 
 ## Features
 
-- Convert local currency to Bitcoin.
-- Display the result in BTC and Satoshis.
-- Show transaction fees in both the local currency and Bitcoin.
-- Supports multiple currencies with real-time data.
+- **Currency Conversion**: Converts inputted local currency into Bitcoin.
+- **Multiple Currencies**: Allows users to select from various currencies.
+- **Transaction Fee Integration**: Includes a transaction fee calculation in the conversion.
+- **Sats Display**: Converts small Bitcoin amounts to Satoshis (sats) for better accuracy.
+
+## API Used
+
+- **CoinGecko API**: Provides live cryptocurrency price data for Bitcoin and other coins.  
+   - [API Documentation](https://www.coingecko.com/en/api)
 
 ## Technologies Used
 
-- **HTML**: For the structure of the application.
-- **CSS**: For styling and layout.
-- **JavaScript**: For the functionality of fetching real-time data, handling user inputs, and calculating the conversion.
-- **API**: Uses the CoinGecko API for real-time Bitcoin pricing and currency conversion.
+- HTML
+- CSS
+- JavaScript
+- CoinGecko API
+- Browser (for frontend)
 
-## Setup
+## Running Locally
 
-### Prerequisites
-- Basic knowledge of HTML, CSS, and JavaScript.
-- An internet connection to fetch live data from the API.
+To run the application on your local machine, follow these steps:
 
-### Installation Steps
-
-1. Clone this repository:
+1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/bitcoin-currency-converter.git
+   git clone https://github.com/Uri-x/currency-to-btc.git
    ```
 
 2. Navigate to the project directory:
    ```bash
-   cd bitcoin-currency-converter
+   cd currency-to-btc
    ```
 
-3. Open the `index.html` file in your browser to start using the app.
+3. Open the `index.html` file in your browser to start the app.
 
-## How It Works
+4. Input your local currency and see the conversion to Bitcoin.
 
-1. **Enter Amount**: Input the amount you want to convert in the input field.
-2. **Select Currency**: Choose your local currency from the dropdown menu.
-3. **Click "Convert"**: The app will display the equivalent Bitcoin (BTC) and Satoshis (sats), along with the transaction fee.
-4. **See Results**: The converted values will be shown in the output section.
- 
+## Deployment
+
+The application is deployed on two web servers (Web01 and Web02), with a load balancer (Lb01) handling traffic distribution.
+
+1. **Copy Files to Web Servers**:
+   - Copy the `index.html`, `app.js`, and `style.css` files to both `Web01` and `Web02` under the `/var/www/html/` directory.
+
+2. **Configure Load Balancer**:
+   - Set up the load balancer to direct incoming traffic to either `Web01` or `Web02`. This helps balance the load and ensures the application is scalable and accessible.
+
+3. **Testing**:
+   - Test the application by accessing the load balancer's public IP address to ensure that traffic is correctly balanced and the application is functioning as intended.
+
 Video Link to how it works:https://youtu.be/iBY68wRqnts
-## Contributing
+## Troubleshooting
 
-If you want to contribute to this project, follow these steps:
+If you encounter an "API error" or "failed to fetch data," check your internet connection and ensure that the CoinGecko API is accessible. You may also want to verify your API key, if applicable.
 
-1. Fork this repository.
-2. Create a new branch (`git checkout -b feature-name`).
-3. Make your changes and commit them (`git commit -m 'Add new feature'`).
-4. Push to your branch (`git push origin feature-name`).
-5. Create a pull request.
+## What I aim to add in the future
 
+- Add user authentication to personalize the experience.
+- Implement caching to reduce load times for API requests.
+- Add advanced security measures, including validation and protection against common attacks.
+
+## Credits
+
+- CoinGecko API for providing the real-time price data.
+  
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
+MIT License
+
+---
+
